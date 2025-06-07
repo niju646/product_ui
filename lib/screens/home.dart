@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:product_ui/models/my_product.dart';
+import 'package:product_ui/screens/cart_screen.dart';
+import 'package:product_ui/screens/favorite_screen.dart';
 import 'package:product_ui/widgets/product_card.dart';
 
 class Home extends StatelessWidget {
@@ -22,11 +24,16 @@ class Home extends StatelessWidget {
         ),
         actions: [
           IconButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.of(context).push(MaterialPageRoute(builder: (context)=>CartScreen()));
+              },
               icon: Icon(
                 CupertinoIcons.cart,
                 color: Colors.blue[300],
-              ))
+              )),
+           IconButton(onPressed: (){
+            Navigator.of(context).push(MaterialPageRoute(builder: (context)=> FavoriteScreen()));
+           }, icon: const Icon(Icons.favorite_sharp,color: Colors.red,))   
         ],
       ),
       body: Padding(

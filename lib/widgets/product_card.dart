@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:product_ui/models/product.dart';
+// import 'package:product_ui/providers/cart_provider.dart';
+import 'package:product_ui/providers/favorite_provider.dart';
 import 'package:product_ui/screens/product_details.dart';
+import 'package:provider/provider.dart';
 
 class ProductCard extends StatelessWidget {
   final Product product;
@@ -8,6 +11,8 @@ class ProductCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // final cartProvider = Provider.of<CartProvider>(context);
+    final favoriteProvider = Provider.of<FavoriteProvider>(context);
     return GestureDetector(
       onTap: () {
         Navigator.of(context).push(MaterialPageRoute(
@@ -41,13 +46,20 @@ class ProductCard extends StatelessWidget {
                     fit: BoxFit.cover,
                   ),
                 ),
-                const Positioned(
-                    top: 8,
-                    right: 8,
-                    child: Icon(
-                      Icons.favorite_border,
-                      color: Colors.red,
-                    ))
+                Positioned(
+                  top: 8,
+                  right: 8,
+                  child: IconButton(
+                      onPressed: () {
+                        favoriteProvider.toggleFavorite(product);
+                      },
+                      icon: Icon(
+                        favoriteProvider.isFavorite(product)
+                            ? Icons.favorite
+                            : Icons.favorite_border,
+                        color: Colors.red,
+                      )),
+                )
               ]),
             ),
             Padding(
@@ -65,8 +77,11 @@ class ProductCard extends StatelessWidget {
                     height: 8,
                   ),
                   OutlinedButton(
-                    onPressed: () {},
-                    child: const Text("Add to cart"),
+                    onPressed: () {
+                      // cartProvider.addToCart(product);
+                      Navigator.of(context).push(MaterialPageRoute(builder: (context)=> ProductDetails(product: product)));
+                    },
+                    child: const Text("view"),
                   ),
                 ],
               ),
