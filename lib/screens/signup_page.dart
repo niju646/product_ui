@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:product_ui/router/app_route_constants.dart';
+import 'package:product_ui/widgets/textfield.dart';
+
 
 class SignupPage extends StatelessWidget {
   const SignupPage({super.key});
@@ -33,22 +35,22 @@ class SignupPage extends StatelessWidget {
                 space,
                 const Align(
                     alignment: Alignment.centerLeft, child: Text("Username")),
-                signupfield("contact@dscodetech.com",
-                    controller: usernameController),
+               
+                formfield("contact@dscodetech.com",controller: usernameController),
                 space,
                 const Align(
                   alignment: Alignment.centerLeft,
                   child: Text("Email"),
                 ),
-                signupfield("contact@dscodetech.com",
-                    controller: emailController),
+               
+                formfield("contact@dscodetech.com",controller: emailController),
                 space,
                 const Align(
                   alignment: Alignment.centerLeft,
                   child: Text("password"),
                 ),
-                signupfield("password",
-                    controller: passwordController, isBool: true),
+             
+                formfield("password",controller: passwordController,context: context,isBool: true),
                 space,
                 SizedBox(
                   width: double.infinity,
@@ -60,9 +62,7 @@ class SignupPage extends StatelessWidget {
                             borderRadius: BorderRadius.circular(8),
                           )),
                       onPressed: () {
-                        // Provider.of<AuthProvider>(context).login();
-                        // Navigator.of(context).push(
-                        //     MaterialPageRoute(builder: (context) => Home()));
+                      
                         if (usernameController.text.isNotEmpty &&
                             emailController.text.isNotEmpty &&
                             passwordController.text.isNotEmpty) {
@@ -111,8 +111,7 @@ class SignupPage extends StatelessWidget {
                     const Text("Already have an Account?"),
                     TextButton(
                         onPressed: () {
-                          // Navigator.of(context).push(MaterialPageRoute(
-                          //     builder: (context) => LoginPage()));
+                         
                           GoRouter.of(context)
                               .pushNamed(MyAppCostants().loginRouteName);
                         },
@@ -127,13 +126,5 @@ class SignupPage extends StatelessWidget {
     );
   }
 
-  TextFormField signupfield(String name,
-          {bool isBool = false, required TextEditingController controller}) =>
-      TextFormField(
-        controller: controller,
-        obscureText: isBool,
-        decoration: InputDecoration(
-            hintText: name,
-            border: OutlineInputBorder(borderRadius: BorderRadius.circular(4))),
-      );
+  
 }

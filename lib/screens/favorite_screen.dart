@@ -110,28 +110,6 @@ class FavoriteScreen extends StatelessWidget {
                           trailing: Row(
                             mainAxisSize: MainAxisSize.min,
                             children: [
-                              // Container(
-                              //   decoration: BoxDecoration(
-                              //     color: Colors.blue[50],
-                              //     borderRadius: BorderRadius.circular(8),
-                              //   ),
-                              //   child: IconButton(
-                              //     onPressed: () {
-                              //       // Add to cart functionality
-                              //       ScaffoldMessenger.of(context).showSnackBar(
-                              //         SnackBar(
-                              //           content: Text('${item.name} added to cart'),
-                              //           backgroundColor: Colors.green,
-                              //           duration: const Duration(seconds: 2),
-                              //         ),
-                              //       );
-                              //     },
-                              //     icon: Icon(
-                              //       CupertinoIcons.cart_badge_plus,
-                              //       color: Colors.blue[600],
-                              //     ),
-                              //   ),
-                              // ),
                               const SizedBox(width: 8),
                               Container(
                                 decoration: BoxDecoration(
@@ -187,24 +165,6 @@ class FavoriteScreen extends StatelessWidget {
               color: Colors.grey[500],
             ),
           ),
-          // const SizedBox(height: 24),
-          // ElevatedButton.icon(
-          //   onPressed: () {
-          //     // Navigate back or to products screen
-          //   },
-          //   icon: const Icon(CupertinoIcons.search, color: Colors.white),
-          //   label: const Text(
-          //     "Browse Products",
-          //     style: TextStyle(color: Colors.white),
-          //   ),
-          //   style: ElevatedButton.styleFrom(
-          //     backgroundColor: Colors.pink[600],
-          //     padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-          //     shape: RoundedRectangleBorder(
-          //       borderRadius: BorderRadius.circular(8),
-          //     ),
-          //   ),
-          // ),
         ],
       ),
     );

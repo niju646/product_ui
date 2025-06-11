@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:product_ui/providers/auth_provider.dart';
 import 'package:product_ui/router/app_route_constants.dart';
+import 'package:product_ui/widgets/textfield.dart';
 
 import 'package:provider/provider.dart';
 
@@ -43,7 +44,7 @@ class LoginPage extends StatelessWidget {
                     child: Text('Your password')),
                 space,
                 formfield("Password",
-                    isBool: true, controller: passwordController),
+                    isBool: true, controller: passwordController,context: context),
                 space,
                 SizedBox(
                   width: double.infinity,
@@ -59,8 +60,7 @@ class LoginPage extends StatelessWidget {
                             emailController.text.isNotEmpty) {
                           Provider.of<AuthProvider>(context, listen: false)
                               .login();
-                          // Navigator.of(context).push(
-                          //     MaterialPageRoute(builder: (context) => Home()));
+                     
                           GoRouter.of(context)
                               .pushNamed(MyAppCostants().homeRouteName);
                           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
@@ -101,8 +101,7 @@ class LoginPage extends StatelessWidget {
                     const Text("Don't have an account?"),
                     TextButton(
                         onPressed: () {
-                          // Navigator.of(context).push(
-                          //       MaterialPageRoute(builder: (context) => SignupPage()));
+                         
                           GoRouter.of(context)
                               .pushNamed(MyAppCostants().signupRouteName);
                         },
@@ -117,16 +116,5 @@ class LoginPage extends StatelessWidget {
     );
   }
 
-  TextFormField formfield(String name,
-      {bool isBool = false, required TextEditingController controller}) {
-    return TextFormField(
-      controller: controller,
-      obscureText: isBool,
-      decoration: InputDecoration(
-          hintText: name,
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(4),
-          )),
-    );
-  }
+
 }

@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:product_ui/models/product.dart';
-// import 'package:product_ui/providers/cart_provider.dart';
 import 'package:product_ui/providers/favorite_provider.dart';
 import 'package:product_ui/router/app_route_constants.dart';
-import 'package:product_ui/screens/product_details.dart';
 import 'package:provider/provider.dart';
 
 class ProductCard extends StatelessWidget {
