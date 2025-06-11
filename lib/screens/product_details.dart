@@ -105,6 +105,12 @@ class ProductDetails extends StatelessWidget {
                           favoriteProvider.toggleFavorite(product);
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(
+                              behavior: SnackBarBehavior.floating,
+                              margin: const EdgeInsets.symmetric(
+                                  horizontal: 20, vertical: 10),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(16),
+                              ),
                               content: Text(
                                 favoriteProvider.isFavorite(product)
                                     ? '${product.name} added to favorites'
@@ -290,6 +296,12 @@ class ProductDetails extends StatelessWidget {
                         cartProvider.addToCart(product);
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(
+                            behavior: SnackBarBehavior.floating,
+                            margin: const EdgeInsets.symmetric(
+                                horizontal: 20, vertical: 10),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(16),
+                            ),
                             content: Text('${product.name} added to cart'),
                             backgroundColor: Colors.green,
                             duration: const Duration(seconds: 2),

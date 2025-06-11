@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:product_ui/models/product.dart';
 // import 'package:product_ui/providers/cart_provider.dart';
 import 'package:product_ui/providers/favorite_provider.dart';
+import 'package:product_ui/router/app_route_constants.dart';
 import 'package:product_ui/screens/product_details.dart';
 import 'package:provider/provider.dart';
 
@@ -15,8 +17,9 @@ class ProductCard extends StatelessWidget {
     final favoriteProvider = Provider.of<FavoriteProvider>(context);
     return GestureDetector(
       onTap: () {
-        Navigator.of(context).push(MaterialPageRoute(
-            builder: (context) => ProductDetails(product: product)));
+        // Navigator.of(context).push(MaterialPageRoute(
+        //     builder: (context) => ProductDetails(product: product)));
+        GoRouter.of(context).pushNamed(MyAppCostants().productRouteName,extra: product);
       },
       child: Container(
         margin: const EdgeInsets.all(8),
@@ -79,7 +82,8 @@ class ProductCard extends StatelessWidget {
                   OutlinedButton(
                     onPressed: () {
                       // cartProvider.addToCart(product);
-                      Navigator.of(context).push(MaterialPageRoute(builder: (context)=> ProductDetails(product: product)));
+                      // Navigator.of(context).push(MaterialPageRoute(builder: (context)=> ProductDetails(product: product)));
+                      GoRouter.of(context).pushNamed(MyAppCostants().productRouteName,extra: product);
                     },
                     child: const Text("view"),
                   ),

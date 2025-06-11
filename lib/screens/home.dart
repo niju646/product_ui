@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:product_ui/models/my_product.dart';
+import 'package:product_ui/router/app_route_constants.dart';
 import 'package:product_ui/screens/cart_screen.dart';
 import 'package:product_ui/screens/favorite_screen.dart';
 import 'package:product_ui/widgets/product_card.dart';
@@ -25,14 +27,16 @@ class Home extends StatelessWidget {
         actions: [
           IconButton(
               onPressed: () {
-                Navigator.of(context).push(MaterialPageRoute(builder: (context)=>CartScreen()));
+                // Navigator.of(context).push(MaterialPageRoute(builder: (context)=>CartScreen()));
+                GoRouter.of(context).pushNamed(MyAppCostants().cartRouteName);
               },
               icon: Icon(
                 CupertinoIcons.cart,
                 color: Colors.blue[300],
               )),
            IconButton(onPressed: (){
-            Navigator.of(context).push(MaterialPageRoute(builder: (context)=> FavoriteScreen()));
+            // Navigator.of(context).push(MaterialPageRoute(builder: (context)=> FavoriteScreen()));
+            GoRouter.of(context).pushNamed(MyAppCostants().favoriteRouteName);
            }, icon: const Icon(Icons.favorite_sharp,color: Colors.red,))   
         ],
       ),

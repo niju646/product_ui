@@ -234,6 +234,12 @@ class FavoriteScreen extends StatelessWidget {
                 Navigator.of(context).pop();
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(
+                    behavior: SnackBarBehavior.floating,
+                    margin: const EdgeInsets.symmetric(
+                        horizontal: 20, vertical: 10),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(16),
+                    ),
                     content: Text('${item.name} removed from favorites'),
                     backgroundColor: Colors.orange,
                     duration: const Duration(seconds: 2),
