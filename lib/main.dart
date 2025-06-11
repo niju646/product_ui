@@ -6,13 +6,11 @@ import 'package:product_ui/router/app_route_config.dart';
 import 'package:provider/provider.dart';
 
 main() {
-  runApp(MultiProvider(
-    providers: [
-      ChangeNotifierProvider(create: (_)=> CartProvider()),
-      ChangeNotifierProvider(create: (_)=> FavoriteProvider()),
-      ChangeNotifierProvider(create: (_)=> AuthProvider()),
-    ],
-    child: MyApp()));
+  runApp(MultiProvider(providers: [
+    ChangeNotifierProvider(create: (_) => CartProvider()),
+    ChangeNotifierProvider(create: (_) => FavoriteProvider()),
+    ChangeNotifierProvider(create: (_) => AuthProvider()),
+  ], child: const MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -22,12 +20,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp.router(
       debugShowCheckedModeBanner: false,
-        routerConfig: MyAppRouter().router,
-        // routeInformationParser: MyAppRouter().router.routeInformationParser,
-        // routerDelegate: MyAppRouter().router.routerDelegate,
-        // routeInformationProvider: MyAppRouter().router.routeInformationProvider,
-        // backButtonDispatcher: MyAppRouter().router.backButtonDispatcher,
-     
+      routerConfig: MyAppRouter().router,
     );
   }
 }

@@ -44,7 +44,9 @@ class LoginPage extends StatelessWidget {
                     child: Text('Your password')),
                 space,
                 formfield("Password",
-                    isBool: true, controller: passwordController,context: context),
+                    isBool: true,
+                    controller: passwordController,
+                    context: context),
                 space,
                 SizedBox(
                   width: double.infinity,
@@ -60,7 +62,7 @@ class LoginPage extends StatelessWidget {
                             emailController.text.isNotEmpty) {
                           Provider.of<AuthProvider>(context, listen: false)
                               .login();
-                     
+
                           GoRouter.of(context)
                               .pushNamed(MyAppCostants().homeRouteName);
                           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
@@ -101,7 +103,6 @@ class LoginPage extends StatelessWidget {
                     const Text("Don't have an account?"),
                     TextButton(
                         onPressed: () {
-                         
                           GoRouter.of(context)
                               .pushNamed(MyAppCostants().signupRouteName);
                         },
@@ -115,6 +116,4 @@ class LoginPage extends StatelessWidget {
       ),
     );
   }
-
-
 }

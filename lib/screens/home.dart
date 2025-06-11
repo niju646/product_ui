@@ -25,7 +25,6 @@ class Home extends StatelessWidget {
         actions: [
           IconButton(
               onPressed: () {
-                // Navigator.of(context).push(MaterialPageRoute(builder: (context)=>CartScreen()));
                 GoRouter.of(context).pushNamed(MyAppCostants().cartRouteName);
               },
               icon: Icon(
@@ -34,7 +33,6 @@ class Home extends StatelessWidget {
               )),
           IconButton(
               onPressed: () {
-                // Navigator.of(context).push(MaterialPageRoute(builder: (context)=> FavoriteScreen()));
                 GoRouter.of(context)
                     .pushNamed(MyAppCostants().favoriteRouteName);
               },
