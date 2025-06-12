@@ -39,12 +39,12 @@ class CartScreen extends StatelessWidget {
                         decoration: BoxDecoration(
                           color: Colors.white,
                           borderRadius: BorderRadius.circular(12),
-                          boxShadow: [
+                          boxShadow: const [
                             BoxShadow(
-                              color: Colors.grey.withOpacity(0.1),
+                              color: Color.fromARGB(255, 216, 222, 228),
                               spreadRadius: 1,
                               blurRadius: 4,
-                              offset: const Offset(0, 2),
+                              offset: Offset(0, 2),
                             ),
                           ],
                         ),
@@ -149,14 +149,14 @@ class CartScreen extends StatelessWidget {
     double total = cart.fold(0, (sum, item) => sum + item.price);
 
     return Container(
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         color: Colors.white,
         boxShadow: [
           BoxShadow(
-            color: Colors.grey.withOpacity(0.2),
+            color: Color.fromARGB(255, 208, 217, 224),
             spreadRadius: 1,
             blurRadius: 4,
-            offset: const Offset(0, -2),
+            offset: Offset(0, -2),
           ),
         ],
       ),

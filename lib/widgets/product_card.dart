@@ -11,27 +11,36 @@ class ProductCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // final cartProvider = Provider.of<CartProvider>(context);
     final favoriteProvider = Provider.of<FavoriteProvider>(context);
     return GestureDetector(
       onTap: () {
-        // Navigator.of(context).push(MaterialPageRoute(
-        //     builder: (context) => ProductDetails(product: product)));
-        GoRouter.of(context).pushNamed(MyAppCostants().productRouteName,extra: product);
+        GoRouter.of(context)
+            .pushNamed(MyAppCostants().productRouteName, extra: product);
       },
       child: Container(
         margin: const EdgeInsets.all(8),
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(12.0),
-          boxShadow: [
+          borderRadius: BorderRadius.circular(16.0),
+          gradient: const LinearGradient(
+            colors: [
+              Color(0xFFE3F2FD),
+              Color(0xFFBBDEFB),
+            ],
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+          ),
+          border: Border.all(
+            color: const Color.fromARGB(255, 196, 221, 241),
+            width: 1.5,
+          ),
+          boxShadow: const [
             BoxShadow(
-              blurRadius: 4,
+              color: Color(0x33000000),
+              blurRadius: 8,
               spreadRadius: 2,
-              offset: const Offset(0, 4),
-              color: Colors.grey.withOpacity(0.3),
-            )
+              offset: Offset(0, 4),
+            ),
           ],
-          color: Colors.white,
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -79,9 +88,9 @@ class ProductCard extends StatelessWidget {
                   ),
                   OutlinedButton(
                     onPressed: () {
-                      // cartProvider.addToCart(product);
-                      // Navigator.of(context).push(MaterialPageRoute(builder: (context)=> ProductDetails(product: product)));
-                      GoRouter.of(context).pushNamed(MyAppCostants().productRouteName,extra: product);
+                      GoRouter.of(context).pushNamed(
+                          MyAppCostants().productRouteName,
+                          extra: product);
                     },
                     child: const Text("view"),
                   ),

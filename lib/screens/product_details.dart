@@ -1,8 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:product_ui/models/product.dart';
 import 'package:product_ui/providers/cart_provider.dart';
 import 'package:product_ui/providers/favorite_provider.dart';
+import 'package:product_ui/router/app_route_constants.dart';
 import 'package:provider/provider.dart';
 
 class ProductDetails extends StatelessWidget {
@@ -19,21 +21,20 @@ class ProductDetails extends StatelessWidget {
       body: SafeArea(
         child: Column(
           children: [
-            // Hero Image Section
             Container(
               height: 400,
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 color: Colors.white,
-                borderRadius: const BorderRadius.only(
+                borderRadius: BorderRadius.only(
                   bottomLeft: Radius.circular(30),
                   bottomRight: Radius.circular(30),
                 ),
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.grey.withOpacity(0.2),
+                    color: Color.fromARGB(255, 224, 230, 235),
                     spreadRadius: 2,
                     blurRadius: 10,
-                    offset: const Offset(0, 5),
+                    offset: Offset(0, 5),
                   ),
                 ],
               ),
@@ -51,11 +52,10 @@ class ProductDetails extends StatelessWidget {
                       fit: BoxFit.cover,
                     ),
                   ),
-                  // Gradient overlay for better text visibility
                   Container(
                     height: 400,
-                    decoration: BoxDecoration(
-                      borderRadius: const BorderRadius.only(
+                    decoration: const BoxDecoration(
+                      borderRadius: BorderRadius.only(
                         bottomLeft: Radius.circular(30),
                         bottomRight: Radius.circular(30),
                       ),
@@ -63,21 +63,20 @@ class ProductDetails extends StatelessWidget {
                         begin: Alignment.topCenter,
                         end: Alignment.bottomCenter,
                         colors: [
-                          Colors.black.withOpacity(0.3),
+                          Color.fromARGB(3, 0, 0, 0),
                           Colors.transparent,
                           Colors.transparent,
-                          Colors.black.withOpacity(0.2),
+                          Color.fromARGB(3, 0, 0, 0),
                         ],
                       ),
                     ),
                   ),
-                  // Back Button
                   Positioned(
                     top: 16,
                     left: 16,
                     child: Container(
                       decoration: BoxDecoration(
-                        color: Colors.white.withOpacity(0.9),
+                        color: const Color.fromARGB(255, 224, 230, 235),
                         borderRadius: BorderRadius.circular(12),
                       ),
                       child: IconButton(
@@ -91,13 +90,12 @@ class ProductDetails extends StatelessWidget {
                       ),
                     ),
                   ),
-                  // Favorite Button
                   Positioned(
                     top: 16,
                     right: 16,
                     child: Container(
                       decoration: BoxDecoration(
-                        color: Colors.white.withOpacity(0.9),
+                        color: const Color.fromARGB(255, 224, 230, 235),
                         borderRadius: BorderRadius.circular(12),
                       ),
                       child: IconButton(
@@ -136,15 +134,12 @@ class ProductDetails extends StatelessWidget {
                 ],
               ),
             ),
-
-            // Product Details Section
             Expanded(
               child: SingleChildScrollView(
                 padding: const EdgeInsets.all(24),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    // Product Name
                     Text(
                       product.name,
                       style: const TextStyle(
@@ -154,8 +149,6 @@ class ProductDetails extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(height: 8),
-
-                    // Price with styling
                     Container(
                       padding: const EdgeInsets.symmetric(
                         horizontal: 12,
@@ -175,8 +168,6 @@ class ProductDetails extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(height: 24),
-
-                    // Rating Section (placeholder)
                     Row(
                       children: [
                         Row(
@@ -200,8 +191,6 @@ class ProductDetails extends StatelessWidget {
                       ],
                     ),
                     const SizedBox(height: 24),
-
-                    // Description Section
                     Text(
                       "Description",
                       style: TextStyle(
@@ -220,8 +209,6 @@ class ProductDetails extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(height: 24),
-
-                    // Features Section
                     Text(
                       "Features",
                       style: TextStyle(
@@ -248,28 +235,25 @@ class ProductDetails extends StatelessWidget {
                 ),
               ),
             ),
-
-            // Bottom Action Bar
             Container(
               padding: const EdgeInsets.all(24),
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 color: Colors.white,
-                borderRadius: const BorderRadius.only(
+                borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(30),
                   topRight: Radius.circular(30),
                 ),
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.grey.withOpacity(0.2),
+                    color: Color.fromARGB(255, 224, 230, 235),
                     spreadRadius: 2,
                     blurRadius: 10,
-                    offset: const Offset(0, -5),
+                    offset: Offset(0, -5),
                   ),
                 ],
               ),
               child: Row(
                 children: [
-                  // Add to Favorites Button
                   Container(
                     decoration: BoxDecoration(
                       border: Border.all(color: Colors.pink),
@@ -288,8 +272,6 @@ class ProductDetails extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(width: 16),
-
-                  // Add to Cart Button
                   Expanded(
                     child: ElevatedButton(
                       onPressed: () {
@@ -309,7 +291,8 @@ class ProductDetails extends StatelessWidget {
                               label: 'View Cart',
                               textColor: Colors.white,
                               onPressed: () {
-                                // Navigate to cart screen
+                                GoRouter.of(context)
+                                    .pushNamed(MyAppCostants().cartRouteName);
                               },
                             ),
                           ),
