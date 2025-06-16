@@ -10,7 +10,7 @@ class Home extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final products = MyProduct().allProducts;
+    // final products = MyProduct().allProducts;
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -44,19 +44,49 @@ class Home extends StatelessWidget {
       ),
       body: Padding(
         padding: const EdgeInsets.all(12.0),
-        child: GridView.builder(
-            itemCount: products.length,
-            physics: const BouncingScrollPhysics(),
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2,
-              childAspectRatio: 0.72,
-              crossAxisSpacing: 12,
-              mainAxisSpacing: 12,
-            ),
-            itemBuilder: (context, index) {
-              return ProductCard(product: products[index]);
-            }),
+        child: FutureBuilder<List<dynamic>>(
+          future: MyProduct().allProducts, // Fetch the data
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const Center(child: CircularProgressIndicator());
+            } else if (snapshot.hasError) {
+              return Center(child: Text('Error: ${snapshot.error}'));
+            } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+              return const Center(child: Text('No products available'));
+            }
+
+            final products = snapshot.data!;
+            return GridView.builder(
+              itemCount: products.length,
+              physics: const BouncingScrollPhysics(),
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                childAspectRatio: 0.72,
+                crossAxisSpacing: 12,
+                mainAxisSpacing: 12,
+              ),
+              itemBuilder: (context, index) {
+                return ProductCard(product: products[index]);
+              },
+            );
+          },
+        ),
       ),
+      // body: Padding(
+      //   padding: const EdgeInsets.all(12.0),
+      //   child: GridView.builder(
+      //       itemCount: products.length,
+      //       physics: const BouncingScrollPhysics(),
+      //       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+      //         crossAxisCount: 2,
+      //         childAspectRatio: 0.72,
+      //         crossAxisSpacing: 12,
+      //         mainAxisSpacing: 12,
+      //       ),
+      //       itemBuilder: (context, index) {
+      //         return ProductCard(product: products[index]);
+      //       }),
+      // ),
     );
   }
 }
