@@ -26,17 +26,31 @@ class MyProduct {
       } else {
         throw Exception('Failed to load products: ${response.statusCode}');
       }
+    } on DioException catch (e) {
+
+      String errorMessage = 'Dio error: ${e.message}';
+
+      if (e.type == DioExceptionType.connectionError ||
+          e.type == DioExceptionType.unknown) {
+        errorMessage = 'Connection error: Failed to reach the server.';
+      } else if (e.type == DioExceptionType.receiveTimeout ||
+                 e.type == DioExceptionType.sendTimeout) {
+        errorMessage = 'Connection timed out. Please try again later.';
+      } else if (e.response != null) {
+        errorMessage =
+            'Server error: ${e.response?.statusCode} - ${e.response?.statusMessage}';
+      }
+
+      print(errorMessage);
+      throw Exception(errorMessage);
     } catch (e) {
-      print("The error is : $e");
-      throw Exception('Error fetching products: $e');
+      // Handle all other errors
+      print("Unexpected error: $e");
+      throw Exception('Unexpected error fetching products: $e');
     }
-    }
-    
   }
-
-
-
-
+}
+    
 
 
 
