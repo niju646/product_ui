@@ -45,7 +45,7 @@ class Home extends StatelessWidget {
       body: Padding(
         padding: const EdgeInsets.all(12.0),
         child: FutureBuilder<List<dynamic>>(
-          future: MyProduct().allProducts, // Fetch the data
+          future: MyProduct().allProducts, 
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return const Center(child: CircularProgressIndicator());
