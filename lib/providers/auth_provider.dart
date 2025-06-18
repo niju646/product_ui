@@ -1,24 +1,23 @@
 import 'package:flutter/material.dart';
 
-class AuthProvider extends ChangeNotifier{
+class AuthProvider extends ChangeNotifier {
   bool _isLoggedIn = false;
   bool _isVisible = false;
 
-  bool get isLoggedin =>  _isLoggedIn;
+  bool get isLoggedin => _isLoggedIn;
   bool get isVisible => _isVisible;
 
-  void login(){
+  void login() {
     _isLoggedIn = true;
     notifyListeners();
   }
 
-  void logout(){
+  void logout() {
     _isLoggedIn = false;
     notifyListeners();
   }
 
-
-  void visiblity(){
+  void visiblity() {
     _isVisible = !_isVisible;
     notifyListeners();
   }

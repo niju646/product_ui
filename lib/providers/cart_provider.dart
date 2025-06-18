@@ -13,7 +13,7 @@ class CartProvider extends ChangeNotifier {
   }
 
    void removeCart(Product product) {
-    _cartItems.remove(product); // removes one item
+    _cartItems.remove(product); 
     notifyListeners();
   }
 

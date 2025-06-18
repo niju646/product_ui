@@ -29,7 +29,7 @@ Widget formfield(String name,
           ),
           suffixIcon: IconButton(
               onPressed: () {
-                Provider.of<AuthProvider>(context,listen: false).visiblity();
+                Provider.of<AuthProvider>(context, listen: false).visiblity();
               },
               icon: Icon(
                 visiblityprovider.isVisible

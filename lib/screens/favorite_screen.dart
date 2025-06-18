@@ -117,11 +117,10 @@ class FavoriteScreen extends StatelessWidget {
                                 ),
                                 child: IconButton(
                                   onPressed: () {
-                                    // _showRemoveDialog(context, item);
                                     Provider.of<FavoriteProvider>(context,
                                             listen: false)
                                         .deletefavorite(item);
-                                    Navigator.of(context).pop();
+
                                     ScaffoldMessenger.of(context).showSnackBar(
                                       SnackBar(
                                         behavior: SnackBarBehavior.floating,
@@ -187,47 +186,4 @@ class FavoriteScreen extends StatelessWidget {
       ),
     );
   }
-
-  // void _showRemoveDialog(BuildContext context, dynamic item) {
-  //   showCupertinoDialog(
-  //     context: context,
-  //     builder: (BuildContext context) {
-  //       return CupertinoAlertDialog(
-  //         title: const Text("Remove from Favorites"),
-  //         content: Text(
-  //             "Are you sure you want to remove '${item.name}' from your favorites?"),
-  //         actions: [
-  //           CupertinoDialogAction(
-  //             child: const Text("Cancel"),
-  //             onPressed: () {
-  //               Navigator.of(context).pop();
-  //             },
-  //           ),
-  //           CupertinoDialogAction(
-  //             isDestructiveAction: true,
-  //             child: const Text("Remove"),
-  //             onPressed: () {
-  //               Provider.of<FavoriteProvider>(context, listen: false)
-  //                   .deletefavorite(item);
-  //               Navigator.of(context).pop();
-  //               ScaffoldMessenger.of(context).showSnackBar(
-  //                 SnackBar(
-  //                   behavior: SnackBarBehavior.floating,
-  //                   margin: const EdgeInsets.symmetric(
-  //                       horizontal: 20, vertical: 10),
-  //                   shape: RoundedRectangleBorder(
-  //                     borderRadius: BorderRadius.circular(16),
-  //                   ),
-  //                   content: Text('${item.name} removed from favorites'),
-  //                   backgroundColor: Colors.orange,
-  //                   duration: const Duration(seconds: 2),
-  //                 ),
-  //               );
-  //             },
-  //           ),
-  //         ],
-  //       );
-  //     },
-  //   );
-  // }
 }

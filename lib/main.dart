@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:product_ui/providers/product_provider.dart';
 import 'package:product_ui/providers/auth_provider.dart';
 import 'package:product_ui/providers/cart_provider.dart';
 import 'package:product_ui/providers/favorite_provider.dart';
@@ -10,6 +11,7 @@ main() {
     ChangeNotifierProvider(create: (_) => CartProvider()),
     ChangeNotifierProvider(create: (_) => FavoriteProvider()),
     ChangeNotifierProvider(create: (_) => AuthProvider()),
+    ChangeNotifierProvider(create: (_) => ProductProvider()),
   ], child: const MyApp()));
 }
 

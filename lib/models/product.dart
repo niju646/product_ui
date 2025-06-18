@@ -16,20 +16,18 @@ class Product {
   });
 
   factory Product.fromJson(Map<String, dynamic> json) {
-    if (json['_id'] == null || json['name'] == null || json['price'] == null) {
+    if (json['id'] == null || json['name'] == null || json['price'] == null) {
       throw const FormatException(
           'Missing required fields in JSON: id, name, or price');
     }
-    String name = json['name'];
-    String imagePath = _getImagePath(name.toLowerCase());
-
+    String imagePath = _getImagePath(json['name']);
     return Product(
-      id: json['_id'],
+      id: json['id'].toString(),
       name: json['name'],
       price: double.parse(json['price'].toString()),
-      category: json['category'] ?? 'smartphone',
-      description: json['description'] ?? 'A budget friendly phone',
       image: imagePath,
+      category: json['category'] ?? 'Smartphone',
+      description: json['description'] ?? 'A great smartphone',
     );
   }
 
@@ -41,15 +39,17 @@ class Product {
       'realme': 'assets/realme.jpg',
       'redmi': 'assets/redmi.jpg',
       'samsung': 'assets/samsung.jpg',
-
     };
-
-    return  imageMap[name] ?? 'assets/default.jpg';
+    String? imagePath = imageMap[name.toLowerCase()];
+    if (imagePath == null) {
+      return 'assets/default.jpg';
+    }
+    return imagePath;
   }
 
   Map<String, dynamic> toJson() {
     return {
-      '_id': id,
+      'id': id,
       'name': name,
       'category': category,
       'image': image,
@@ -79,18 +79,20 @@ class Product {
 //   });
 
 //   factory Product.fromJson(Map<String, dynamic> json) {
-//     if (json['id'] == null || json['name'] == null || json['price'] == null ) {
+//     if (json['_id'] == null || json['name'] == null || json['price'] == null) {
 //       throw const FormatException(
 //           'Missing required fields in JSON: id, name, or price');
 //     }
-//     String imagePath = _getImagePath(json['name']);
+//     String name = json['name'];
+//     String imagePath = _getImagePath(name.toLowerCase());
+
 //     return Product(
-//       id: json['id'].toString(),
+//       id: json['_id'],
 //       name: json['name'],
 //       price: double.parse(json['price'].toString()),
+//       category: json['category'] ?? 'smartphone',
+//       description: json['description'] ?? 'A budget friendly phone',
 //       image: imagePath,
-//       category: json['category'] ?? 'Smartphone',
-//       description: json['description'] ?? 'A great smartphone',
 //     );
 //   }
 
@@ -102,17 +104,15 @@ class Product {
 //       'realme': 'assets/realme.jpg',
 //       'redmi': 'assets/redmi.jpg',
 //       'samsung': 'assets/samsung.jpg',
+
 //     };
-//     String? imagePath = imageMap[name.toLowerCase()];
-//     if (imagePath == null) {
-//       return 'assets/default.jpg';
-//     }
-//     return imagePath;
+
+//     return  imageMap[name] ?? 'assets/default.jpg';
 //   }
 
 //   Map<String, dynamic> toJson() {
 //     return {
-//       'id': id,
+//       '_id': id,
 //       'name': name,
 //       'category': category,
 //       'image': image,
@@ -121,3 +121,6 @@ class Product {
 //     };
 //   }
 // }
+
+
+
