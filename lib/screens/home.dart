@@ -72,7 +72,7 @@ class _HomeState extends State<Home> {
               );
             } else if (provider.product.isEmpty) {
               return const Center(
-                child: Text('Cart is empty'),
+                child: Text('No Products are available'),
               );
             } else {
               return GridView.builder(
