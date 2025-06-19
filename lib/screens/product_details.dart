@@ -1,8 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:product_ui/models/cart_products.dart';
+
 import 'package:product_ui/models/product.dart';
 import 'package:product_ui/providers/cart_provider.dart';
+
 import 'package:product_ui/providers/favorite_provider.dart';
 import 'package:product_ui/router/app_route_constants.dart';
 import 'package:provider/provider.dart';
@@ -14,7 +17,6 @@ class ProductDetails extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final favoriteProvider = Provider.of<FavoriteProvider>(context);
-    final cartProvider = Provider.of<CartProvider>(context);
 
     return Scaffold(
       backgroundColor: Colors.grey[50],
@@ -275,7 +277,16 @@ class ProductDetails extends StatelessWidget {
                   Expanded(
                     child: ElevatedButton(
                       onPressed: () {
-                        cartProvider.addToCart(product);
+                        final cartProduct = CartProducts(
+                          productId: int.parse(product.id),
+                          name: product.name,
+                          price: product.price,
+                          quantity: 1,
+                          image: product.image,
+                        );
+                        Provider.of<CartProvider>(context, listen: false)
+                            .addToCart(cartProduct);
+
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(
                             behavior: SnackBarBehavior.floating,

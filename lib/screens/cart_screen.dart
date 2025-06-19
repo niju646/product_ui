@@ -1,3 +1,4 @@
+//CartScreen
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:product_ui/providers/cart_provider.dart';
@@ -8,109 +9,137 @@ class CartScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final cart = Provider.of<CartProvider>(context).cartItems;
+    // final cart = Provider.of<CartProvider>(context).cartItems;
+    return FutureBuilder(
+        future: Provider.of<CartProvider>(context, listen: false).fetchCart(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            // return const Center(child: CircularProgressIndicator(),);
+            return const Scaffold(
+              body: Center(
+                child: CircularProgressIndicator(),
+              ),
+            );
+          }
 
-    return Scaffold(
-      backgroundColor: Colors.grey[50],
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        elevation: 0,
-        title: Text(
-          "My Cart",
-          style: TextStyle(
-            color: Colors.blue[700],
-            fontWeight: FontWeight.w600,
-            fontSize: 22,
-          ),
-        ),
-      ),
-      body: cart.isEmpty
-          ? _buildEmptyCart()
-          : Column(
-              children: [
-                Expanded(
-                  child: ListView.builder(
-                    padding: const EdgeInsets.all(16),
-                    itemCount: cart.length,
-                    itemBuilder: (context, index) {
-                      final item = cart[index];
-                      return Container(
-                        margin: const EdgeInsets.only(bottom: 12),
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(12),
-                          boxShadow: const [
-                            BoxShadow(
-                              color: Color.fromARGB(255, 216, 222, 228),
-                              spreadRadius: 1,
-                              blurRadius: 4,
-                              offset: Offset(0, 2),
-                            ),
-                          ],
-                        ),
-                        child: ListTile(
-                          contentPadding: const EdgeInsets.all(16),
-                          leading: Container(
-                            width: 60,
-                            height: 60,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(8),
-                              color: Colors.grey[100],
-                            ),
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.circular(8),
-                              child: Image.asset(
-                                item.image,
-                                width: 60,
-                                height: 60,
-                                fit: BoxFit.cover,
-                              ),
-                            ),
-                          ),
-                          title: Text(
-                            item.name,
-                            style: const TextStyle(
-                              fontWeight: FontWeight.w600,
-                              fontSize: 16,
-                            ),
-                          ),
-                          subtitle: Padding(
-                            padding: const EdgeInsets.only(top: 4),
-                            child: Text(
-                              '₹${item.price.toInt()}',
-                              style: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.w500,
-                                color: Colors.green[700],
-                              ),
-                            ),
-                          ),
-                          trailing: Container(
-                            decoration: BoxDecoration(
-                              color: Colors.red[50],
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                            child: IconButton(
-                              onPressed: () {
-                                Provider.of<CartProvider>(context,
-                                        listen: false)
-                                    .removeCart(item);
-                              },
-                              icon: Icon(
-                                CupertinoIcons.delete,
-                                color: Colors.red[600],
-                              ),
-                            ),
-                          ),
-                        ),
-                      );
-                    },
-                  ),
+          final cart = Provider.of<CartProvider>(context).cartItems;
+          final error = Provider.of<CartProvider>(context).error;
+          if (error != null) {
+            return Scaffold(
+              body: Center(
+                child: Text(
+                  error,
+                  style: const TextStyle(color: Colors.red, fontSize: 16),
                 ),
-                _buildBottomSection(cart),
-              ],
+              ),
+            );
+          }
+          return Scaffold(
+            backgroundColor: Colors.grey[50],
+            appBar: AppBar(
+              backgroundColor: Colors.white,
+              elevation: 0,
+              title: Text(
+                "My Cart",
+                style: TextStyle(
+                  color: Colors.blue[700],
+                  fontWeight: FontWeight.w600,
+                  fontSize: 22,
+                ),
+              ),
             ),
-    );
+            body: cart.isEmpty
+                ? _buildEmptyCart()
+                : Column(
+                    children: [
+                      Expanded(
+                        child: ListView.builder(
+                          padding: const EdgeInsets.all(16),
+                          itemCount: cart.length,
+                          itemBuilder: (context, index) {
+                            final item = cart[index];
+                            return Container(
+                              margin: const EdgeInsets.only(bottom: 12),
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(12),
+                                boxShadow: const [
+                                  BoxShadow(
+                                    color: Color.fromARGB(255, 216, 222, 228),
+                                    spreadRadius: 1,
+                                    blurRadius: 4,
+                                    offset: Offset(0, 2),
+                                  ),
+                                ],
+                              ),
+                              child: ListTile(
+                                contentPadding: const EdgeInsets.all(16),
+                                leading: Container(
+                                  width: 60,
+                                  height: 60,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(8),
+                                    color: Colors.grey[100],
+                                  ),
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(8),
+                                    child: Image.asset(
+                                      item.image,
+                                      width: 60,
+                                      height: 60,
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ),
+                                ),
+                                title: Text(
+                                  item.name,
+                                  style: const TextStyle(
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: 16,
+                                  ),
+                                ),
+                                subtitle: Padding(
+                                  padding: const EdgeInsets.only(top: 4),
+                                  child: Text(
+                                    '₹${item.price.toInt()}',
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w500,
+                                      color: Colors.green[700],
+                                    ),
+                                  ),
+                                ),
+                                trailing: Container(
+                                  decoration: BoxDecoration(
+                                    color: Colors.red[50],
+                                    borderRadius: BorderRadius.circular(8),
+                                  ),
+                                  child: IconButton(
+                                    onPressed: () {
+                                      // Provider.of<CartProvider>(context,
+                                      //         listen: false)
+                                      //     .removeCart(item);
+
+                                      Provider.of<CartProvider>(context,
+                                              listen: false)
+                                          .removeCart(item);
+                                    },
+                                    icon: Icon(
+                                      CupertinoIcons.delete,
+                                      color: Colors.red[600],
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            );
+                          },
+                        ),
+                      ),
+                      _buildBottomSection(cart),
+                    ],
+                  ),
+          );
+        });
   }
 
   Widget _buildEmptyCart() {
