@@ -2,6 +2,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:product_ui/models/cart_products.dart';
+import 'package:product_ui/services/dio_client.dart';
 
 class CartProvider extends ChangeNotifier {
   List<CartProducts> _cartItems = [];
@@ -9,9 +10,10 @@ class CartProvider extends ChangeNotifier {
   List<CartProducts> get cartItems => _cartItems;
   String? get error => _error;
 
-  final Dio _dio = Dio(BaseOptions(
-    baseUrl: 'http://localhost:3000/',
-  ));
+  // final Dio _dio = Dio(BaseOptions(
+  //   baseUrl: 'http://localhost:3000/',
+  // ));
+  final Dio _dio = DioClient.instance;
 
   Future<void> fetchCart() async {
     _error = null;

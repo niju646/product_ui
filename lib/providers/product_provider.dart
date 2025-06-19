@@ -1,15 +1,17 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:product_ui/models/product.dart';
+import 'package:product_ui/services/dio_client.dart';
 
 class ProductProvider extends ChangeNotifier {
-  final Dio _dio = Dio(BaseOptions(
-      baseUrl: 'http://localhost:3000',
-      connectTimeout: const Duration(seconds: 10),
-      receiveTimeout: const Duration(seconds: 10),
-      headers: {
-        'Accept': 'application/json',
-      }));
+  // final Dio _dio = Dio(BaseOptions(
+  //     baseUrl: 'http://localhost:3000',
+  //     connectTimeout: const Duration(seconds: 10),
+  //     receiveTimeout: const Duration(seconds: 10),
+  //     headers: {
+  //       'Accept': 'application/json',
+  //     }));
+  final Dio _dio = DioClient.instance;
   bool _isLoading = false;
   List<Product> _product = [];
   String? _error;
