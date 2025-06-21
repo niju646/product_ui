@@ -1,4 +1,3 @@
-// lib/services/dio_client.dart
 import 'package:dio/dio.dart';
 
 class DioClient {
@@ -13,5 +12,21 @@ class DioClient {
     ),
   );
 
-  static Dio get instance => _dio;
+  static Future<Response> fetchProduct() async {
+    return await _dio.get('/products');
+  }
+
+  static Future<Response> fetchCart() async {
+    return await _dio.get('/cart');
+  }
+
+  static Future<Response> addToCart(int productId) async {
+    return await _dio.post('/cart/add', data: {
+      'productId': productId,
+    });
+  }
+
+  static Future<Response> removeCart(int productId) async {
+    return await _dio.delete('/cart/$productId');
+  }
 }
