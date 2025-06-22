@@ -14,9 +14,11 @@ class CartProvider extends ChangeNotifier {
     _error = null;
     try {
       final response = await DioClient.fetchCart();
+      if (response.statusCode == 201 || response.statusCode == 200) {
+        final List data = response.data;
+        _cartItems = data.map((item) => CartProducts.fromJson(item)).toList();
+      }
 
-      final List data = response.data;
-      _cartItems = data.map((item) => CartProducts.fromJson(item)).toList();
       notifyListeners();
     } catch (e) {
       _error = 'connection error: $e';
