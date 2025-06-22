@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:product_ui/models/product.dart';
-import 'package:product_ui/services/dio_client.dart';
+import 'package:product_ui/services/api_services.dart';
 
 class ProductProvider extends ChangeNotifier {
   bool _isLoading = false;
@@ -19,7 +19,7 @@ class ProductProvider extends ChangeNotifier {
     notifyListeners();
 
     try {
-      final response = await DioClient.fetchProduct();
+      final response = await ApiServices.fetchProduct();
 
       if (response.statusCode == 200 || response.statusCode == 201) {
         List jsonResponse = response.data;

@@ -2,7 +2,7 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:product_ui/models/cart_products.dart';
-import 'package:product_ui/services/dio_client.dart';
+import 'package:product_ui/services/api_services.dart';
 
 class CartProvider extends ChangeNotifier {
   List<CartProducts> _cartItems = [];
@@ -13,7 +13,7 @@ class CartProvider extends ChangeNotifier {
   Future<void> fetchCart() async {
     _error = null;
     try {
-      final response = await DioClient.fetchCart();
+      final response = await ApiServices.fetchCart();
       if (response.statusCode == 201 || response.statusCode == 200) {
         final List data = response.data;
         _cartItems = data.map((item) => CartProducts.fromJson(item)).toList();
@@ -28,7 +28,7 @@ class CartProvider extends ChangeNotifier {
   Future<void> addToCart(CartProducts product) async {
     _error = null;
     try {
-      await DioClient.addToCart(product.productId);
+      await ApiServices.addToCart(product.productId);
       await fetchCart();
       notifyListeners();
     } catch (e) {
@@ -39,7 +39,7 @@ class CartProvider extends ChangeNotifier {
   Future<void> removeCart(CartProducts product) async {
     _error = null;
     try {
-      await DioClient.removeCart(product.productId);
+      await ApiServices.removeCart(product.productId);
       await fetchCart();
       notifyListeners();
     } catch (e) {
