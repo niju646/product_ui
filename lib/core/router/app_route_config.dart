@@ -3,7 +3,6 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:go_router/go_router.dart';
 import 'package:product_ui/feature/cart/models/product.dart';
 import 'package:product_ui/core/router/app_route_constants.dart';
-import 'package:product_ui/feature/cart/providers/auth_provider.dart';
 import 'package:product_ui/feature/cart/screens/cart_screen.dart';
 import 'package:product_ui/feature/cart/screens/favorite_screen.dart';
 import 'package:product_ui/feature/cart/screens/home.dart';
