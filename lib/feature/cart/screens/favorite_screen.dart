@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:product_ui/providers/favorite_provider.dart';
+import 'package:product_ui/feature/cart/providers/favorite_provider.dart';
 import 'package:provider/provider.dart';
 
 class FavoriteScreen extends StatelessWidget {
@@ -71,7 +71,7 @@ class FavoriteScreen extends StatelessWidget {
                             child: ClipRRect(
                               borderRadius: BorderRadius.circular(8),
                               child: Image.asset(
-                                item.image,
+                                item.image??'',
                                 width: 60,
                                 height: 60,
                                 fit: BoxFit.cover,
@@ -79,7 +79,7 @@ class FavoriteScreen extends StatelessWidget {
                             ),
                           ),
                           title: Text(
-                            item.name,
+                            item.name??'',
                             style: const TextStyle(
                               fontWeight: FontWeight.w600,
                               fontSize: 16,
@@ -90,7 +90,7 @@ class FavoriteScreen extends StatelessWidget {
                             child: Row(
                               children: [
                                 Text(
-                                  '₹${item.price.toInt()}',
+                                  '₹${item.price??0.toInt()}',
                                   style: TextStyle(
                                     fontSize: 16,
                                     fontWeight: FontWeight.w500,

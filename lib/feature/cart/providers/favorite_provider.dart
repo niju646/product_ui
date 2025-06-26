@@ -1,5 +1,5 @@
 import 'package:flutter/cupertino.dart';
-import 'package:product_ui/models/product.dart';
+import 'package:product_ui/feature/cart/models/product.dart';
 
 class FavoriteProvider extends ChangeNotifier{
 

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:product_ui/models/product.dart';
-import 'package:product_ui/providers/favorite_provider.dart';
-import 'package:product_ui/router/app_route_constants.dart';
+import 'package:product_ui/feature/cart/models/product.dart';
+import 'package:product_ui/feature/cart/providers/favorite_provider.dart';
+import 'package:product_ui/core/router/app_route_constants.dart';
 import 'package:provider/provider.dart';
 
 class ProductCard extends StatelessWidget {
@@ -52,7 +52,7 @@ class ProductCard extends StatelessWidget {
                     top: Radius.circular(12),
                   ),
                   child: Image.asset(
-                    product.image,
+                    product.image??'',
                     fit: BoxFit.cover,
                     errorBuilder: (context, error, stackTrace) {
                       return const Center(
@@ -86,12 +86,12 @@ class ProductCard extends StatelessWidget {
               child: Column(
                 children: [
                   Text(
-                    product.name,
+                    product.name??'',
                     style: const TextStyle(
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  Text('Rs.${product.price.toInt()}'),
+                  Text('Rs.${product.price??0.toInt()}'),
                   const SizedBox(
                     height: 8,
                   ),

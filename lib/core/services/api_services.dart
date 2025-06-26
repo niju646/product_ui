@@ -1,11 +1,17 @@
+
+
+
 import 'package:dio/dio.dart';
+import 'package:product_ui/core/utils/urls.dart';
+
 
 class ApiServices {
   static final Dio _dio = Dio(
     BaseOptions(
-      baseUrl: 'http://localhost:3000',
-      connectTimeout: const Duration(seconds: 10),
-      receiveTimeout: const Duration(seconds: 10),
+      baseUrl: Urls.baseurl,
+      connectTimeout: const Duration(seconds: 30),
+      receiveTimeout: const Duration(seconds: 30),
+      
       headers: {
         'Content-Type': 'application/json',
       },
@@ -13,20 +19,20 @@ class ApiServices {
   );
 
   static Future<Response> fetchProduct() async {
-    return await _dio.get('/products');
+    return await _dio.get('/product');
   }
 
   static Future<Response> fetchCart() async {
     return await _dio.get('/cart');
   }
 
-  static Future<Response> addToCart(int productId) async {
+  static Future<Response> addToCart(String productId) async {
     return await _dio.post('/cart/add', data: {
       'productId': productId,
     });
   }
 
-  static Future<Response> removeCart(int productId) async {
+  static Future<Response> removeCart(String productId) async {
     return await _dio.delete('/cart/$productId');
   }
 }

@@ -1,45 +1,50 @@
 //cartProvider
 
 import 'package:flutter/cupertino.dart';
-import 'package:product_ui/models/cart_products.dart';
-import 'package:product_ui/services/api_services.dart';
+import 'package:product_ui/feature/cart/models/cart_products.dart';
+import 'package:product_ui/core/services/api_services.dart';
 
 class CartProvider extends ChangeNotifier {
   List<CartProducts> _cartItems = [];
   String? _error;
   List<CartProducts> get cartItems => _cartItems;
   String? get error => _error;
+  bool _isLoading = true;
+  bool get isLoading => _isLoading;
 
   Future<void> fetchCart() async {
     _error = null;
     try {
       final response = await ApiServices.fetchCart();
       if (response.statusCode == 201 || response.statusCode == 200) {
-        final List data = response.data;
+        final List data = response.data['items'];
         _cartItems = data.map((item) => CartProducts.fromJson(item)).toList();
       }
-
+      _isLoading = false;
       notifyListeners();
     } catch (e) {
       _error = 'connection error: $e';
     }
   }
 
-  Future<void> addToCart(CartProducts product) async {
+  Future<void> addToCart(String productId) async {
     _error = null;
     try {
-      await ApiServices.addToCart(product.productId);
-      await fetchCart();
+      final response = await ApiServices.addToCart(productId);
+      if (response.statusCode == 201 || response.statusCode == 200) {
+        await fetchCart();
+      }
+
       notifyListeners();
     } catch (e) {
       _error = 'add to cart error: $e';
     }
   }
 
-  Future<void> removeCart(CartProducts product) async {
+  Future<void> removeCart(String productId) async {
     _error = null;
     try {
-      await ApiServices.removeCart(product.productId);
+      await ApiServices.removeCart(productId);
       await fetchCart();
       notifyListeners();
     } catch (e) {

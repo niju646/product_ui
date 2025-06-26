@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:product_ui/providers/auth_provider.dart';
-import 'package:product_ui/router/app_route_constants.dart';
-import 'package:product_ui/widgets/textfield.dart';
+// import 'package:product_ui/core/services/login_service.dart';
+import 'package:product_ui/feature/cart/providers/auth_provider.dart';
+import 'package:product_ui/core/router/app_route_constants.dart';
+import 'package:product_ui/feature/cart/widgets/textfield.dart';
 
 import 'package:provider/provider.dart';
 
@@ -13,6 +14,7 @@ class LoginPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final emailController = TextEditingController();
     final passwordController = TextEditingController();
+    
     Widget space = const SizedBox(
       height: 20,
     );
@@ -57,23 +59,28 @@ class LoginPage extends StatelessWidget {
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(8),
                           )),
-                      onPressed: () {
+                      onPressed: () async {
                         if (passwordController.text.isNotEmpty &&
                             emailController.text.isNotEmpty) {
-                          Provider.of<AuthProvider>(context, listen: false)
-                              .login();
-
-                          GoRouter.of(context)
-                              .pushNamed(MyAppCostants().homeRouteName);
-                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                              behavior: SnackBarBehavior.floating,
-                              margin: const EdgeInsets.symmetric(
-                                  horizontal: 20, vertical: 10),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(16),
-                              ),
-                              backgroundColor: Colors.green,
-                              content: const Text('Successfully Logged')));
+                              // final authProvider = Provider.of<AuthProvider>(context);
+                              bool success = await Provider.of<AuthProvider>(context,listen: false).loginAuth(
+                                emailController.text.trim(), passwordController.text.trim());
+                              if(success){
+                                if(!context.mounted) return;
+                                GoRouter.of(context).pushNamed(MyAppCostants().homeRouteName);
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(content: Text("Login Successfull"),
+                                  backgroundColor: Colors.green,
+                                  )
+                                );
+                              }else{
+                                if(!context.mounted) return;
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                    const SnackBar(content: Text("Login Failed"),
+                                    backgroundColor: Colors.red,
+                                    )
+                                );
+                              }                    
                         } else {
                           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                               behavior: SnackBarBehavior.floating,
@@ -108,7 +115,9 @@ class LoginPage extends StatelessWidget {
                         },
                         child: const Text('Sign Up'))
                   ],
-                )
+                ),
+            
+
               ],
             ),
           ),

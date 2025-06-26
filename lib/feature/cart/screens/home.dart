@@ -1,10 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-// import 'package:product_ui/models/my_product.dart';
-import 'package:product_ui/providers/product_provider.dart';
-import 'package:product_ui/router/app_route_constants.dart';
-import 'package:product_ui/widgets/product_card.dart';
+import 'package:product_ui/feature/cart/providers/auth_provider.dart';
+import 'package:product_ui/feature/cart/providers/product_provider.dart';
+import 'package:product_ui/core/router/app_route_constants.dart';
+import 'package:product_ui/feature/cart/widgets/product_card.dart';
 import 'package:provider/provider.dart';
 
 class Home extends StatefulWidget {
@@ -18,7 +18,6 @@ class _HomeState extends State<Home> {
   @override
   void initState() {
     super.initState();
-    // Provider.of<ProductProvider>(context, listen: false).fetchProduct();
      WidgetsBinding.instance.addPostFrameCallback((_) {
     Provider.of<ProductProvider>(context, listen: false).fetchProduct();
   });
@@ -54,7 +53,17 @@ class _HomeState extends State<Home> {
               icon: const Icon(
                 Icons.favorite_sharp,
                 color: Colors.red,
-              ))
+              )),
+
+              IconButton(onPressed: (){
+                Provider.of<AuthProvider>(context,listen: false).logout();
+                 GoRouter.of(context)
+                    .pushNamed(MyAppCostants().loginRouteName);
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(content: Text('Successfully logout'),backgroundColor: Colors.green,)
+                );
+               
+              }, icon: const  Icon(Icons.logout,color: Colors.black,))
         ],
       ),
       body: Padding(
@@ -94,33 +103,6 @@ class _HomeState extends State<Home> {
           },
         ),
 
-        // child: FutureBuilder<List<dynamic>>(
-        //   future: MyProduct().allProducts,
-        //   builder: (context, snapshot) {
-        //     if (snapshot.connectionState == ConnectionState.waiting) {
-        //       return const Center(child: CircularProgressIndicator());
-        //     } else if (snapshot.hasError) {
-        //       return Center(child: Text('Error: ${snapshot.error}'));
-        //     } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-        //       return const Center(child: Text('No products available'));
-        //     }
-
-        //     final products = snapshot.data!;
-        //     return GridView.builder(
-        //       itemCount: products.length,
-        //       physics: const BouncingScrollPhysics(),
-        //       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-        //         crossAxisCount: 2,
-        //         childAspectRatio: 0.72,
-        //         crossAxisSpacing: 12,
-        //         mainAxisSpacing: 12,
-        //       ),
-        //       itemBuilder: (context, index) {
-        //         return ProductCard(product: products[index]);
-        //       },
-        //     );
-        //   },
-        // ),
       ),
     );
   }

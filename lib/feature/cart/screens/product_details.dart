@@ -1,13 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:product_ui/models/cart_products.dart';
 
-import 'package:product_ui/models/product.dart';
-import 'package:product_ui/providers/cart_provider.dart';
 
-import 'package:product_ui/providers/favorite_provider.dart';
-import 'package:product_ui/router/app_route_constants.dart';
+import 'package:product_ui/feature/cart/models/product.dart';
+import 'package:product_ui/feature/cart/providers/cart_provider.dart';
+
+import 'package:product_ui/feature/cart/providers/favorite_provider.dart';
+import 'package:product_ui/core/router/app_route_constants.dart';
 import 'package:provider/provider.dart';
 
 class ProductDetails extends StatelessWidget {
@@ -48,7 +48,7 @@ class ProductDetails extends StatelessWidget {
                       bottomRight: Radius.circular(30),
                     ),
                     child: Image.asset(
-                      product.image,
+                      product.image??'',
                       height: 400,
                       width: double.infinity,
                       fit: BoxFit.cover,
@@ -143,7 +143,7 @@ class ProductDetails extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      product.name,
+                      product.name ?? '',
                       style: const TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 28,
@@ -161,7 +161,7 @@ class ProductDetails extends StatelessWidget {
                         borderRadius: BorderRadius.circular(20),
                       ),
                       child: Text(
-                        "₹${product.price.toInt()}",
+                        "₹${product.price??0.toInt()}",
                         style: TextStyle(
                           fontSize: 24,
                           fontWeight: FontWeight.bold,
@@ -203,7 +203,7 @@ class ProductDetails extends StatelessWidget {
                     ),
                     const SizedBox(height: 8),
                     Text(
-                      product.description,
+                      product.description??'',
                       style: TextStyle(
                         fontSize: 16,
                         color: Colors.grey[600],
@@ -277,15 +277,15 @@ class ProductDetails extends StatelessWidget {
                   Expanded(
                     child: ElevatedButton(
                       onPressed: () {
-                        final cartProduct = CartProducts(
-                          productId: int.parse(product.id),
-                          name: product.name,
-                          price: product.price,
-                          quantity: 1,
-                          image: product.image,
-                        );
+                        // final cartProduct = CartProducts(
+                        //   productId: int.parse(product.id),
+                        //   name: product.name,
+                        //   price: product.price,
+                        //   quantity: 1,
+                        //   image: product.image,
+                        // );
                         Provider.of<CartProvider>(context, listen: false)
-                            .addToCart(cartProduct);
+                            .addToCart(product.id??'');
 
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(

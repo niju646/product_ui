@@ -1,16 +1,39 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:go_router/go_router.dart';
-import 'package:product_ui/models/product.dart';
-import 'package:product_ui/router/app_route_constants.dart';
-import 'package:product_ui/screens/cart_screen.dart';
-import 'package:product_ui/screens/favorite_screen.dart';
-import 'package:product_ui/screens/home.dart';
-import 'package:product_ui/screens/login_page.dart';
-import 'package:product_ui/screens/product_details.dart';
-import 'package:product_ui/screens/signup_page.dart';
+import 'package:product_ui/feature/cart/models/product.dart';
+import 'package:product_ui/core/router/app_route_constants.dart';
+import 'package:product_ui/feature/cart/providers/auth_provider.dart';
+import 'package:product_ui/feature/cart/screens/cart_screen.dart';
+import 'package:product_ui/feature/cart/screens/favorite_screen.dart';
+import 'package:product_ui/feature/cart/screens/home.dart';
+import 'package:product_ui/feature/cart/screens/login_page.dart';
+import 'package:product_ui/feature/cart/screens/product_details.dart';
+import 'package:product_ui/feature/cart/screens/signup_page.dart';
 
 class MyAppRouter {
-  GoRouter router = GoRouter(routes: [
+
+  final _secureStorage = const FlutterSecureStorage();
+
+
+ late final  GoRouter router = GoRouter(
+  initialLocation: '/',
+  redirect: (context, state)async {
+  final token = await _secureStorage.read(key: 'auth_token');
+
+  final isLoggedIn = token != null;
+  final isOnLogin = state.matchedLocation == '/';
+
+  if (!isLoggedIn && !isOnLogin) {
+    return '/';
+  } else if (isLoggedIn && isOnLogin) {
+    return '/home';
+  }
+
+  return null;
+
+  },
+    routes: [
     GoRoute(
       path: '/',
       name: MyAppCostants().loginRouteName,

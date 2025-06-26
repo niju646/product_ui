@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:product_ui/providers/auth_provider.dart';
+import 'package:product_ui/feature/cart/providers/auth_provider.dart';
 import 'package:provider/provider.dart';
 
 Widget formfield(String name,
