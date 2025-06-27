@@ -12,92 +12,75 @@ import 'package:product_ui/feature/cart/screens/profile.dart';
 import 'package:product_ui/feature/cart/screens/signup_page.dart';
 
 class MyAppRouter {
-
   final _secureStorage = const FlutterSecureStorage();
 
+  late final GoRouter router = GoRouter(
+      initialLocation: '/',
+      redirect: (context, state) async {
+        final token = await _secureStorage.read(key: 'auth_token');
 
- late final  GoRouter router = GoRouter(
-  initialLocation: '/',
-  redirect: (context, state) async {
-  final token = await _secureStorage.read(key: 'auth_token');
+        final isLoggedIn = token != null;
+        final isOnLogin = state.matchedLocation == '/';
+        final isOnSignup = state.matchedLocation == '/signup';
 
-  final isLoggedIn = token != null;
-  final isOnLogin = state.matchedLocation == '/';
-  final isOnSignup = state.matchedLocation == '/signup';
+        if (!isLoggedIn && !isOnLogin && !isOnSignup) {
+          return '/';
+        } else if (isLoggedIn && (isOnLogin || isOnSignup)) {
+          return '/home';
+        }
 
-  if (!isLoggedIn && !isOnLogin && !isOnSignup) {
-    return '/';
-  } else if (isLoggedIn && (isOnLogin || isOnSignup)) {
-    return '/home';
-  }
-
-  return null;
-},
-
-  // redirect: (context, state)async {
-  // final token = await _secureStorage.read(key: 'auth_token');
-
-  // final isLoggedIn = token != null;
-  // final isOnLogin = state.matchedLocation == '/';
-
-  // if (!isLoggedIn && !isOnLogin) {
-  //   return '/';
-  // } else if (isLoggedIn && isOnLogin) {
-  //   return '/home';
-  // }
-
-  // return null;
-
-  // },
-    routes: [
-    GoRoute(
-      path: '/',
-      name: MyAppCostants().loginRouteName,
-      pageBuilder: (context, state) {
-        return const MaterialPage(child: LoginPage());
+        return null;
       },
-    ),
-    GoRoute(
-      path: '/home',
-      name: MyAppCostants().homeRouteName,
-      pageBuilder: (context, state) {
-        return const MaterialPage(child: Home());
-      },
-    ),
-    GoRoute(
-      path: '/signup',
-      name: MyAppCostants().signupRouteName,
-      pageBuilder: (context, state) {
-        return const MaterialPage(child: SignupPage());
-      },
-    ),
-    GoRoute(
-      path: '/cart',
-      name: MyAppCostants().cartRouteName,
-      pageBuilder: (context, state) {
-        return const MaterialPage(child: CartScreen());
-      },
-    ),
-    GoRoute(
-      path: '/favorite',
-      name: MyAppCostants().favoriteRouteName,
-      pageBuilder: (context, state) {
-        return const MaterialPage(child: FavoriteScreen());
-      },
-    ),
-    GoRoute(
-      path: '/productdetail',
-      name: MyAppCostants().productRouteName,
-      pageBuilder: (context, state) {
-        final product = state.extra as Product;
-        return MaterialPage(child: ProductDetails(product: product));
-      },
-    ),
-    GoRoute(path: '/profile',
-    name: MyAppCostants().profileRouteName,
-    pageBuilder: (context, state) {
-      return const MaterialPage(child: Profile());
-    },
-    )
-  ]);
+      routes: [
+        GoRoute(
+          path: '/',
+          name: MyAppCostants().loginRouteName,
+          pageBuilder: (context, state) {
+            return const MaterialPage(child: LoginPage());
+          },
+        ),
+        GoRoute(
+          path: '/home',
+          name: MyAppCostants().homeRouteName,
+          pageBuilder: (context, state) {
+            return const MaterialPage(child: Home());
+          },
+        ),
+        GoRoute(
+          path: '/signup',
+          name: MyAppCostants().signupRouteName,
+          pageBuilder: (context, state) {
+            return const MaterialPage(child: SignupPage());
+          },
+        ),
+        GoRoute(
+          path: '/cart',
+          name: MyAppCostants().cartRouteName,
+          pageBuilder: (context, state) {
+            return const MaterialPage(child: CartScreen());
+          },
+        ),
+        GoRoute(
+          path: '/favorite',
+          name: MyAppCostants().favoriteRouteName,
+          pageBuilder: (context, state) {
+            return const MaterialPage(child: FavoriteScreen());
+          },
+        ),
+        GoRoute(
+          path: '/productdetail',
+          name: MyAppCostants().productRouteName,
+          pageBuilder: (context, state) {
+            final product = state.extra as Product;
+            return MaterialPage(child: ProductDetails(product: product));
+          },
+        ),
+        GoRoute(
+          path: '/profile',
+          name: MyAppCostants().profileRouteName,
+          pageBuilder: (context, state) {
+            return const MaterialPage(child: Profile());
+          },
+        )
+      ]);
 }
