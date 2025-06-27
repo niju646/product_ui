@@ -11,6 +11,16 @@ This is a simple Flutter application that displays a grid of product cards. When
 - Shadow effects on product cards
 - “Add to cart” button (static placeholder)
 - Responsive and clean UI
+- ✅ Login & Signup using a backend API (with Dio)
+- 🔐 Securely stores auth token, email, and username using `flutter_secure_storage`
+- 🏠 Home screen with products (fetched via API)
+- 🛒 Add to Cart & Favorite products
+- ❤️ Favorites page
+- 👤 Profile screen that displays saved user details
+- 🔁 Auto-login if token exists (no need to login every time)
+- 🚪 Logout functionality
+- 🧭 Navigation using `go_router`
+- 🌐 API integration using Dio
 
 ## 🖼️ Screens
 
@@ -40,6 +50,10 @@ lib/
 
 - Flutter SDK
 - Material & Cupertino icons
+  dio: ^5.4.0
+  flutter_secure_storage: ^9.0.0
+  provider: ^6.1.0
+  go_router: ^13.0.1
 
 ## 🖼️ Assets
 
