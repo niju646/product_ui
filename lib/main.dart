@@ -6,11 +6,8 @@ import 'package:product_ui/feature/cart/providers/favorite_provider.dart';
 import 'package:product_ui/core/router/app_route_config.dart';
 import 'package:provider/provider.dart';
 
-main() async{
+main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
-  // final authProvider = AuthProvider();
-  // await authProvider.checkLoginStatus();
 
   runApp(MultiProvider(providers: [
     ChangeNotifierProvider(create: (_) => CartProvider()),
@@ -25,10 +22,8 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-       
     return MaterialApp.router(
       debugShowCheckedModeBanner: false,
-  
       routerConfig: MyAppRouter().router,
     );
   }

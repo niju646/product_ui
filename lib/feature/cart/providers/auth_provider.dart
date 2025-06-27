@@ -8,11 +8,15 @@ class AuthProvider extends ChangeNotifier {
   bool _isLoggedIn = false;
   bool _isVisible = false;
   String? _error;
+  String? _username;
+  String? _email;
   // bool _isChecking = true;
 
   bool get isLoggedin => _isLoggedIn;
   bool get isVisible => _isVisible;
   String? get error => _error;
+  String? get username => _username;
+  String? get email => _email;
   // bool get isChecking => _isChecking;
 
   final _loginService = LoginService();
@@ -20,11 +24,15 @@ class AuthProvider extends ChangeNotifier {
 
   void login() {
     _isLoggedIn = true;
+    _username = null;
+    _email = null;
     notifyListeners();
   }
 
   void logout() async {
     await _secureStorage.delete(key: 'auth_token');
+    await _secureStorage.delete(key: 'username');
+    await _secureStorage.delete(key: 'email');
     _isLoggedIn = false;
     notifyListeners();
   }
@@ -37,7 +45,11 @@ class AuthProvider extends ChangeNotifier {
   Future<bool> loginAuth(String email, String password) async {
     try {
       await _loginService.login(email, password);
+      
       _isLoggedIn = true;
+      _username = await _secureStorage.read(key: 'username');
+    _email = await _secureStorage.read(key: 'email');
+      _email=email;
       _error = null;
       notifyListeners();
       return true;
@@ -52,7 +64,11 @@ class AuthProvider extends ChangeNotifier {
       String username, String email, String password) async {
     try {
       await _loginService.signup(username, email, password);
+       _username = await _secureStorage.read(key: 'username');
+    _email = await _secureStorage.read(key: 'email');
       // _isLoggedIn = true;
+      _username=username;
+      _email=email;
       _error = null;
       notifyListeners();
       return true;
@@ -65,6 +81,8 @@ class AuthProvider extends ChangeNotifier {
 
   Future<void> checkLoginStatus()async{
     final token = await _secureStorage.read(key: 'auth_token');
+    _username = await _secureStorage.read(key: 'username');
+    _email = await _secureStorage.read(key: 'email');
     _isLoggedIn = token !=null;
     log("⏩⏩ token is: $token");
     log('✅ Token exists: $_isLoggedIn');

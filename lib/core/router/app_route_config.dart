@@ -8,6 +8,7 @@ import 'package:product_ui/feature/cart/screens/favorite_screen.dart';
 import 'package:product_ui/feature/cart/screens/home.dart';
 import 'package:product_ui/feature/cart/screens/login_page.dart';
 import 'package:product_ui/feature/cart/screens/product_details.dart';
+import 'package:product_ui/feature/cart/screens/profile.dart';
 import 'package:product_ui/feature/cart/screens/signup_page.dart';
 
 class MyAppRouter {
@@ -17,21 +18,37 @@ class MyAppRouter {
 
  late final  GoRouter router = GoRouter(
   initialLocation: '/',
-  redirect: (context, state)async {
+  redirect: (context, state) async {
   final token = await _secureStorage.read(key: 'auth_token');
 
   final isLoggedIn = token != null;
   final isOnLogin = state.matchedLocation == '/';
+  final isOnSignup = state.matchedLocation == '/signup';
 
-  if (!isLoggedIn && !isOnLogin) {
+  if (!isLoggedIn && !isOnLogin && !isOnSignup) {
     return '/';
-  } else if (isLoggedIn && isOnLogin) {
+  } else if (isLoggedIn && (isOnLogin || isOnSignup)) {
     return '/home';
   }
 
   return null;
+},
 
-  },
+  // redirect: (context, state)async {
+  // final token = await _secureStorage.read(key: 'auth_token');
+
+  // final isLoggedIn = token != null;
+  // final isOnLogin = state.matchedLocation == '/';
+
+  // if (!isLoggedIn && !isOnLogin) {
+  //   return '/';
+  // } else if (isLoggedIn && isOnLogin) {
+  //   return '/home';
+  // }
+
+  // return null;
+
+  // },
     routes: [
     GoRoute(
       path: '/',
@@ -75,6 +92,12 @@ class MyAppRouter {
         final product = state.extra as Product;
         return MaterialPage(child: ProductDetails(product: product));
       },
+    ),
+    GoRoute(path: '/profile',
+    name: MyAppCostants().profileRouteName,
+    pageBuilder: (context, state) {
+      return const MaterialPage(child: Profile());
+    },
     )
   ]);
 }
